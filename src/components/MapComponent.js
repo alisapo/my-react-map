@@ -9,6 +9,7 @@ export default class MapComponent extends Component {
       lat: 37.7749,
       lng: -122.4194,
       zoom: 13,
+      disabled: true,
       currentIncident: null,
     };
   }
@@ -17,6 +18,31 @@ export default class MapComponent extends Component {
     let incident = this.props.incidents.find(item => item.id === incidentId);
     this.setState({
       currentIncident: incident,
+      disabled: false,
+    });
+  }
+
+  actionsSlider = (buttonId) => {
+    let incidents = this.props.incidents,
+      currentIndex = incidents.indexOf(this.state.currentIncident),
+      newIndex;
+
+    if (currentIndex === incidents.length - 1) {
+      buttonId === 'next' ?
+        newIndex = 0
+        : newIndex = currentIndex - 1;
+    } else if (currentIndex === eval(0)) {
+      buttonId === 'next' ?
+        newIndex = currentIndex + 1
+        : newIndex = incidents.length - 1;
+    } else {
+      buttonId === 'next' ?
+        newIndex = currentIndex + 1
+        : newIndex = currentIndex - 1;
+    }
+
+    this.setState({
+      currentIncident: incidents[newIndex],
     });
   }
 
@@ -58,6 +84,25 @@ export default class MapComponent extends Component {
               })
             }
           </MapContainer>
+          {<div className="slider-buttons">
+            <button
+              id='prev'
+              disabled={this.state.disabled}
+              onClick={(e) => this.actionsSlider(e.target.id)}>
+            </button>
+            {
+              this.state.currentIncident ?
+                <div className="currentTag">
+                  Current tag: {this.state.currentIncident.address}
+                </div>
+                : <div>No current tag</div>
+            }
+            <button
+              id='next'
+              disabled={this.state.disabled}
+              onClick={(e) => this.actionsSlider(e.target.id)}>
+            </button>
+          </div>}
         </div>
         : 'Data is loading...'
     )
