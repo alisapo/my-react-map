@@ -9,7 +9,15 @@ export default class MapComponent extends Component {
       lat: 37.7749,
       lng: -122.4194,
       zoom: 13,
+      currentIncident: null,
     };
+  }
+
+  clickMarker = incidentId => {
+    let incident = this.props.incidents.find(item => item.id === incidentId);
+    this.setState({
+      currentIncident: incident,
+    });
   }
 
   render() {
@@ -31,7 +39,9 @@ export default class MapComponent extends Component {
                 incident.point.coordinates[0]];
 
                 return (
-                  <Marker
+                  <Marker eventHandlers={{
+                    click: () => this.clickMarker(incident.id),
+                  }}
                     position={point}
                     key={incident.incident_number}
                   >
