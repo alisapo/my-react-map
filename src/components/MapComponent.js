@@ -12,6 +12,8 @@ export default class MapComponent extends Component {
       disabled: true,
       currentIncident: null,
     };
+
+    this.markerRefs = []
   }
 
   clickMarker = incidentId => {
@@ -20,6 +22,12 @@ export default class MapComponent extends Component {
       currentIncident: incident,
       disabled: false,
     });
+  }
+
+  openPopup(marker, id) {
+    if (marker && marker.leafletElement) {
+      marker.leafletElement.openPopup(id);
+    }
   }
 
   actionsSlider = (buttonId) => {
@@ -44,6 +52,7 @@ export default class MapComponent extends Component {
     this.setState({
       currentIncident: incidents[newIndex],
     });
+    this.markerRefs[incidents[newIndex].id].openPopup();
   }
 
   render() {
@@ -70,6 +79,7 @@ export default class MapComponent extends Component {
                   }}
                     position={point}
                     key={incident.incident_number}
+                    ref={ref => this.markerRefs[incident.id] = ref}
                   >
                     <Popup className="popup">
                       <div style={popupContent}>
