@@ -1,0 +1,55 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --colorBlue: #488be2;
+  --colorWhite: #ffffff;
+  --outlineButton: none;
+  --borderButton: none;
+  --cursorButton: pointer;
+  --widthButton: 0;
+  --heightButton: 0;
+  --borderBottomButton: 5px solid transparent;
+  --borderTopButton: 10px solid transparent;
+}
+
+.leaflet-container {
+    height: 400px;
+    width: 800px;
+}
+
+.slider-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#prev {
+  width: var(--widthButton);
+  height: var(--heightButton);
+  margin-right: 15px;
+  background-color: var(--colorWhite);
+  border-top: var(--borderTopButton);
+  border-right: 20px solid var(--colorBlue);
+  border-bottom: var(--borderBottomButton);
+}
+
+#next {
+  width: var(--widthButton);
+  height: var(--heightButton);
+  margin-left: 15px;
+  background-color: var(--colorWhite);
+  border-top: var(--borderTopButton);
+  border-left: 20px solid var(--colorBlue);
+  border-bottom: var(--borderBottomButton);
+}
+
+#next:enabled:hover,
+#prev:enabled:hover {
+  background-color: var(--colorBlue);
+  cursor: var(--cursorButton);
+}
